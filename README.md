@@ -42,7 +42,7 @@ trajectory = Trajectory(
 
 Each row of ```topo``` denote one lineage. For example, the ```topo``` for the trajectory example would be ```topo = [[0,1,2][0,1,3]]```.
 
-![Trajectory example](example.pdf)
+![Trajectory example](example.png)
 
    
 The trajectory is primarliy defined by trajectory structure and sampling assumption. 3) scRNA-seq count matrix. Trajectory structure is provided to Chronocell as a 2D array, with each lineage (path) represented as a row. Along with the structure, an initial guess of switching time is also needed as a starting point in the fitting. The sampling assumption refers to the prior distribution of the latent variables (process time and lineages) for each cell. This is represented as a 3D array with shape (n, L, M), where n is the number of cells, L is the number of lineages, and M is the number of time grids.
