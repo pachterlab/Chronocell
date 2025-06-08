@@ -1,6 +1,6 @@
 # Chronocell
 
-Chronocell is a Python package that implements the trajectory fitting procedures described in [Trajectory inference from single-cell genomics data with a process time model](https://doi.org/10.1371/journal.pcbi.1012752). The code to reproduce results in the paper is in another repository: https://github.com/pachterlab/FGP_2024
+Chronocell is a Python package that implements the trajectory fitting procedures described in [Trajectory inference from single-cell genomics data with a process time model](https://doi.org/10.1371/journal.pcbi.1012752). The associated code and data to reproduce the results from the publication are available in a separate repository: https://github.com/pachterlab/FGP_2024.
 
 # Usage
 
@@ -39,10 +39,12 @@ trajectory = Trajectory(
     store_info=True           # Whether to store additional info (default: True)
 )
 
-   Instantiate a `Trajectory` object with the relevant parameters:
+```python
 
-   ```python
-   trajectory = Trajectory(<parameters>)
+Each row of ```topo``` denote one lineage.
+
+![Trajectory example](figures/trajectory_structure.png)
+
    
 The trajectory is primarliy defined by trajectory structure and sampling assumption. 3) scRNA-seq count matrix. Trajectory structure is provided to Chronocell as a 2D array, with each lineage (path) represented as a row. Along with the structure, an initial guess of switching time is also needed as a starting point in the fitting. The sampling assumption refers to the prior distribution of the latent variables (process time and lineages) for each cell. This is represented as a 3D array with shape (n, L, M), where n is the number of cells, L is the number of lineages, and M is the number of time grids.
 
