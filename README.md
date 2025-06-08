@@ -23,13 +23,13 @@ from Chronocell.mixtures import PoissonMixtureSS, PoissonMixture, GammaPoissonMi
 from Chronocell.plotting import *
 ```
 
-## Trajectory
+## Trajectory class
 The core component of this project is the Trajectory class, which allows you to create trajectory instances and fit them to data using the Expectation-Maximization (EM) algorithm. 
 
 1. **Initialization**
 Create a `Trajectory` instance by providing the topology and tau parameters which describe the trajectory structure, and model that specify the trasncription model, along with optional settings:
 
-```python
+```
 trajectory = Trajectory(
     topo,                 # 2D numpy array representing the trajectory topology (integers)
     tau,                  # Array of tau parameters (floats)
@@ -38,8 +38,7 @@ trajectory = Trajectory(
     verbose=0,                # Verbosity level (default: 0)
     store_info=True           # Whether to store additional info (default: True)
 )
-
-```python
+```
 
 Each row of ```topo``` denote one lineage. For example, the ```topo``` for the trajectory example would be ```topo = [[0,1,2][0,1,3]]```.
 
