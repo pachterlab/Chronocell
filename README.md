@@ -26,7 +26,7 @@ from Chronocell.plotting import *
 ## Trajectory class
 The core component of this project is the Trajectory class, which allows you to create trajectory instances and fit them to data using the Expectation-Maximization (EM) algorithm. 
 
-1. **Initialization**
+### Initialization
 Create a `Trajectory` instance by providing the topology and tau parameters which describe the trajectory structure, and model that specify the trasncription model, along with optional settings:
 
 ```
@@ -48,7 +48,7 @@ Each row of `topo` denotes one lineage. Below, we show examples of `topo` for th
 ```model``` specifies the used transcription model. we have two classes of models based on the assumption of global switch time: (1) "two_species_ss", the synchronized model, assumes a completely synchronized switch in transcription rates across all genes; and (2) "two_species_ss_tau", the desynchronized model, assumes each gene has its own switching time. The desynchronized model is more challenging to fit from scratch, so we recommend using a warm start based on the results of the synchronized model. The suffix `ss` in the model name stands for steady state, because we assume that initial state 0 is at steady state.
 
 
-2. **Fit**
+### Fit
 
 To estimate model parameters from data, use the `.fit()` method on a `Trajectory` instance. This method applies an Expectation-Maximization (EM) algorithm.
 
