@@ -40,27 +40,26 @@ trajectory = Trajectory(
 )
 ```
 
-Each row of ```topo``` denote one lineage. For example, the ```topo``` for the trajectory example would be ```topo = [[0,1,2][0,1,3]]```.
+Each row of `topo` denotes one lineage. Below, we show examples of `topo` for three different trajectory structures. `tau` is the array of switching times, which are shared across different lineages. We assume the first switching time is fixed as $\tau_0 = 0$, and the last entry of $\tau$ marks the end of the observation.
 
 ![Trajectory example](example.png)
 
-   
-The trajectory is primarliy defined by trajectory structure and sampling assumption. 3) scRNA-seq count matrix. Trajectory structure is provided to Chronocell as a 2D array, with each lineage (path) represented as a row. Along with the structure, an initial guess of switching time is also needed as a starting point in the fitting. The sampling assumption refers to the prior distribution of the latent variables (process time and lineages) for each cell. This is represented as a 3D array with shape (n, L, M), where n is the number of cells, L is the number of lineages, and M is the number of time grids.
 
-Model.
-Building upon the common transcription model, we have two classes of models based on the assumption of global switch time: (1) the synchronized model, which assumes a completely synchronized switch in transcription rates across all genes; and (2) the desynchronized model, where each gene has its own switching time. The desynchronized model is more challenging to fit from scratch, so we recommend using a warm start based on the results of the synchronized model.
-
-Inference.
-We use the expectation–maximization algorithm to fit the trajectory model on the scRNA-seq count matrix. See Section Maximum likelihood estimates of parameters by EM algorithm.
-
-Output.
-The primary output of Chronocell consists of the parameters and posterior distribution for each cell. Other relevant information such as the Akaike Information Criterion (AIC) and the Fisher information matrix can also be calculated.
+```model``` specifies the used transcription model. we have two classes of models based on the assumption of global switch time: (1) "two_species_ss", the synchronized model, assumes a completely synchronized switch in transcription rates across all genes; and (2) "two_species_ss_tau", the desynchronized model, assumes each gene has its own switching time. The desynchronized model is more challenging to fit from scratch, so we recommend using a warm start based on the results of the synchronized model. The suffix `ss` in the model name stands for steady state, because we assume that initial state 0 is at steady state.
 
 
+2. **Fit**
 
-inference.py: contains the Trajectory class and methods for fitting.
-mixtures.py: contains the code and classes for Poisson mixture model.
-models/: contains the model specific functions to calculate log likelihood and optimize parameters.
-simulation.py: contains the code for generating simulations.
-plotting.py: contains some convenient but not essential functions for plotting.
-utils.py: contains some helper functions.
+To estimate model parameters from data, use the `.fit()` method on a `Trajectory` instance. This method applies an Expectation-Maximization (EM) algorithm.
+
+```
+trajectory.fit(X, warm_start=False, Q=None, theta=None, prior=None, norm_Q=True, 
+               fit_tau=None, m=101, n_init=10, epoch=100, 
+               parallel=False, n_threads=1, seed=42)
+```
+
+`X` is the scRNA-seq count matrix of shape (n_cells, n_genes). Warm start (warm_start=True) uses existing posteriors (Q) or parameters (theta) as initialization. Recommended when switching from synchronized to desynchronized models. Multiple initializations (warm_start=False) runs multiple EM fits with different random initializations and selects the best based on ELBO. `Q` (np.ndarray, optional) is the 3D array representing posterior probabilities of cells over lineages and time points. `theta` (np.ndarray, optional)is the initial values for model parameters. The `prior` is the prior distribution of the latent variables (process time and lineages) for each cell. This is represented as a 3D array with shape (n, L, M), where n is the number of cells, L is the number of lineages, and M is the number of time grids.
+
+The method returns the fitted Trajectory instance with the following attributes: 1) Q, posterior assignments for each cell over time and lineage; 2) theta, estimated model parameters; 3) elbos, evidence lower bounds (ELBOs) of runs
+
+Based on `Q` and `theta`, other relevant information such as the Akaike Information Criterion (AIC) and the Fisher information matrix can also be calculated.
