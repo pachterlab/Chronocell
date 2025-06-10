@@ -1,6 +1,6 @@
 # Chronocell
 
-Chronocell is a Python package that implements the trajectory fitting procedures described in [Trajectory inference from single-cell genomics data with a process time model](https://doi.org/10.1371/journal.pcbi.1012752). The associated code and data to reproduce the results from the publication are available in a separate repository: https://github.com/pachterlab/FGP_2024.
+Chronocell is a Python package that implements the trajectory fitting procedures described in the paper [Trajectory inference from single-cell genomics data with a process time model](https://doi.org/10.1371/journal.pcbi.1012752) by Meichen Fang, Gennady Gorin and Lior Pachter, PLoS Computational Biology, 2025. The associated code and data to reproduce the results from the publication are available in a separate repository: https://github.com/pachterlab/FGP_2024.
 
 # Usage
 
@@ -24,7 +24,7 @@ from Chronocell.plotting import *
 ```
 
 ## Trajectory class
-The core component of this project is the Trajectory class, which allows you to create trajectory instances and fit them to data using the Expectation-Maximization (EM) algorithm. 
+The core component of this project is the Trajectory class, which allows for the creation of trajectory instances and provides the code to fit them to data using the Expectation-Maximization (EM) algorithm. 
 
 ### Initialization
 Create a `Trajectory` instance by providing the topology and tau parameters which describe the trajectory structure, and model that specify the trasncription model, along with optional settings:
