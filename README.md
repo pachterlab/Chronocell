@@ -60,6 +60,6 @@ trajectory.fit(X, warm_start=False, Q=None, theta=None, prior=None, norm_Q=True,
 
 `X` is the scRNA-seq count matrix of shape (n_cells, n_genes). Warm start (warm_start=True) uses existing posteriors (Q) or parameters (theta) as initialization. Recommended when switching from synchronized to desynchronized models. Multiple initializations (warm_start=False) runs multiple EM fits with different random initializations and selects the best based on ELBO. `Q` (np.ndarray, optional) is the 3D array representing posterior probabilities of cells over lineages and time points. `theta` (np.ndarray, optional)is the initial values for model parameters. The `prior` is the prior distribution of the latent variables (process time and lineages) for each cell. This is represented as a 3D array with shape (n, L, M), where n is the number of cells, L is the number of lineages, and M is the number of time grids.
 
-The method returns the fitted Trajectory instance with the following attributes: 1) Q, posterior assignments for each cell over time and lineage; 2) theta, estimated model parameters; 3) elbos, evidence lower bounds (ELBOs) of runs
+The method returns the fitted Trajectory instance with the following attributes: 1) Q, posterior assignments for each cell over time and lineage; 2) theta, estimated model parameters; 3) elbos, evidence lower bounds (ELBOs) of runs.
 
 Based on `Q` and `theta`, other relevant information such as the Akaike Information Criterion (AIC) and the Fisher information matrix can also be calculated.
